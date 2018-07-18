@@ -19,7 +19,6 @@ service to produce high quality speech from text.
 https://github.com/hcooper/snips-tts-polly
 """
 
-
 def on_connect(client, userdata, flags, rc):
     print("MQTT connected")
     client.subscribe("hermes/tts/say")
@@ -37,16 +36,16 @@ def _random_id() -> str:
 
 def _convert_mp3_to_wav(mp3_path: Path, wav_path: Path, delete: bool = True) -> None:
     """ Uses mpg123 to convert mp3->wav, and delete the original mp3 """
-    subprocess.run(["/usr/bin/mpg123", "-q", "-w", str(wav_path), str(mp3_path)])
+    subprocess.call(["/usr/bin/mpg123", "-q", "-w", str(wav_path), str(mp3_path)])
     if delete:
         os.remove(str(mp3_path))
 
 
-def tts_say(client, userdata, msg, voice="Raveena") -> None:
+def tts_say(client, userdata, msg, voice="Marlene") -> None:
     data = json.loads(msg.payload.decode())
 
     tmp_tts_dir = "/tmp/tts/"
-    Path(tmp_tts_dir).mkdir(parents=True, exist_ok=True)
+    os.makedirs(tmp_tts_dir, exist_ok=True)
 
     common_filename = "{}-{}".format(voice, _hash(data["text"]))
     mp3_path = Path("{}{}.mp3".format(tmp_tts_dir, common_filename))
