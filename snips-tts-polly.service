@@ -4,7 +4,7 @@ Description=snips-tts-polly
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/snips-tts-polly
+ExecStart=/usr/bin/snips-tts-polly.py
 Restart=always
 StartLimitInterval=0
 
