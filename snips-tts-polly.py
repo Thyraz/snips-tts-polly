@@ -73,7 +73,8 @@ def tts_say(client, userdata, msg, voice="Marlene") -> None:
     tts_ids[play_id] = data["id"]
     msgs = [
         {
-            "topic": "hermes/audioServer/default/playBytes/{}".format(play_id),
+            #"topic": "hermes/audioServer/default/playBytes/{}".format(play_id),
+            "topic": "hermes/audioServer/{}/playBytes/{}".format(data["siteId"] ,play_id),
             "payload": wav_path.open("rb").read(),
         },
         # {
